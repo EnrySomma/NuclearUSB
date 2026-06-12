@@ -1,6 +1,6 @@
 # ☢️ NuclearUSB — Portable Offline AI & Knowledge Suite
 
-NuclearUSB is a portable offline AI and knowledge system designed to live on a 128 GB USB drive. It is intended for disaster management, network-isolated environments, off-grid use, field operations, and privacy-conscious local workflows, combining local LLMs, retrieval-augmented generation from local files, and offline knowledge access in a single repository-driven setup [cite:1][cite:70].
+NuclearUSB is a portable offline AI and knowledge system designed to live on a 128 GB USB drive. It is intended for disaster management, network-isolated environments, off-grid use, field operations, and privacy-conscious local workflows, combining local LLMs, retrieval-augmented generation from local files, and offline knowledge access in a single repository-driven setup.
 
 [![Project Status: Ready for Demo](https://img.shields.io/badge/Status-Ready%20for%20Demo-yellow.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#)
@@ -28,22 +28,22 @@ NuclearUSB is a portable offline AI and knowledge system designed to live on a 1
 
 ## Overview
 
-**NuclearUSB** is a plug-and-play offline AI toolkit and knowledge retrieval repository built around the idea of a USB-based portable intelligence suite. The project is designed to run local GGUF models, provide a browser-based UI, retrieve information from indexed local documents, show grounded citations, and optionally integrate offline knowledge archives such as Wikipedia through Kiwix [cite:1][cite:3][web:46].
+**NuclearUSB** is a plug-and-play offline AI toolkit and knowledge retrieval repository built around the idea of a USB-based portable intelligence suite. The project is designed to run local GGUF models, provide a browser-based UI, retrieve information from indexed local documents, show grounded citations, and optionally integrate offline knowledge archives such as Wikipedia through Kiwix.
 
 The repository is structured to support both:
 - **Demo mode**, where the project works with placeholder assets and mock responses.
-- **Real mode**, where local binaries, GGUF models, and offline knowledge files are installed and used directly [cite:1][cite:70].
+- **Real mode**, where local binaries, GGUF models, and offline knowledge files are installed and used directly.
 
 ---
 
 ## Key Features
 
-- **Triple-model suite:** run specialized local models for fast chat, stronger reasoning, and coding assistance [cite:70].
-- **Grounded RAG engine:** search local indexed documents, rank relevant chunks, and map answers to explicit citations such as `[S1]` and `[S2]` [cite:1].
+- **Triple-model suite:** run specialized local models for fast chat, stronger reasoning, and coding assistance.
+- **Grounded RAG engine:** search local indexed documents, rank relevant chunks, and map answers to explicit citations such as `[S1]` and `[S2]`.
 - **Medical guide dispatcher:** detect medical queries, show a warning/disclaimer, and surface relevant local first-aid guides [cite:1].
-- **Offline knowledge integration:** support `.zim` archives and offline libraries through Kiwix, which is built for reading and serving offline knowledge content [web:46][web:123][web:126].
+- **Offline knowledge integration:** support `.zim` archives and offline libraries through Kiwix, which is built for reading and serving offline knowledge content.
 - **Graceful fallback behavior:** remain usable in demo mode even if model files or runtime binaries are missing.
-- **Cross-platform launch system:** support Windows, Linux, and macOS through local launch scripts [cite:70].
+- **Cross-platform launch system:** support Windows, Linux, and macOS through local launch scripts.
 
 ---
 
@@ -80,7 +80,7 @@ The repository is structured to support both:
                                           └───────────────────────┘
 ```
 
-The local model runtime is intended to be based on `llama.cpp`, which provides local inference and server tooling, while Kiwix is the intended companion for serving offline `.zim` knowledge archives such as Wikipedia [web:120][web:13][web:46].
+The local model runtime is intended to be based on `llama.cpp`, which provides local inference and server tooling, while Kiwix is the intended companion for serving offline `.zim` knowledge archives such as Wikipedia.
 
 ---
 
@@ -127,7 +127,7 @@ NuclearUSB/
 └── README.md
 ```
 
-This structure is intentionally split between **runtime**, **knowledge**, **index**, **models**, and **UI** so the repository can work as a scaffold first and later become a real USB-deployable package [cite:3][cite:70].
+This structure is intentionally split between **runtime**, **knowledge**, **index**, **models**, and **UI** so the repository can work as a scaffold first and later become a real USB-deployable package.
 
 ---
 
@@ -145,12 +145,12 @@ The retrieval system is designed to stay simple, inspectable, and local-first.
    The query is classified into categories such as `medical`, `survival`, `tech`, `coding`, or `general`.
 
 4. **Source packaging**  
-   The top results are assigned deterministic source IDs like `[S1]`, `[S2]`, and returned with metadata for the UI [cite:1].
+   The top results are assigned deterministic source IDs like `[S1]`, `[S2]`, and returned with metadata for the UI.
 
 5. **Medical warning dispatch**  
-   If the query is medical, the system adds a warning/disclaimer and surfaces relevant guides from the medical knowledge folder [cite:1].
+   If the query is medical, the system adds a warning/disclaimer and surfaces relevant guides from the medical knowledge folder.
 
-The key rule is simple: **citations must come only from retrieved chunks**. If no supporting chunks are found, the system should avoid fake grounding and say so clearly [cite:1].
+The key rule is simple: **citations must come only from retrieved chunks**. If no supporting chunks are found, the system should avoid fake grounding and say so clearly.
 
 ---
 
@@ -211,7 +211,7 @@ To switch from demo mode to real local inference, install the runtime binaries a
 
 Download the appropriate runtime build from the official releases page:
 
-- [llama.cpp Releases](https://github.com/ggml-org/llama.cpp/releases) [web:120]
+- [llama.cpp Releases](https://github.com/ggml-org/llama.cpp/releases)
 
 Place the binaries in the expected runtime folders:
 
@@ -219,7 +219,7 @@ Place the binaries in the expected runtime folders:
 - **Linux:** `runtime/llm/linux/`
 - **macOS:** `runtime/llm/mac/`
 
-The project is intended to use `llama-server` as the local model-serving component, because `llama.cpp` provides server functionality for local inference workflows [web:120][web:13].
+The project is intended to use `llama-server` as the local model-serving component, because `llama.cpp` provides server functionality for local inference workflows.
 
 ### 2. Install GGUF models
 
@@ -243,13 +243,13 @@ Run your platform launcher from `scripts/` again. If binaries and models are cor
 
 ## Kiwix and Offline Knowledge
 
-Kiwix is the intended offline knowledge component for NuclearUSB. It is designed to provide access to offline educational and reference content, including Wikipedia and other `.zim` libraries, without requiring internet access [web:46][web:123][web:126].
+Kiwix is the intended offline knowledge component for NuclearUSB. It is designed to provide access to offline educational and reference content, including Wikipedia and other `.zim` libraries, without requiring internet access.
 
 ### What to install
 
 Download Kiwix or Kiwix Tools from:
 
-- [Kiwix Applications](https://kiwix.org/en/applications/) [web:46]
+- [Kiwix Applications](https://kiwix.org/en/applications/)
 
 For NuclearUSB, the most relevant tool is:
 
@@ -273,7 +273,7 @@ Then open:
 http://localhost:8081
 ```
 
-This lets NuclearUSB complement model answers with a true offline knowledge layer instead of relying only on model memory [web:46].
+This lets NuclearUSB complement model answers with a true offline knowledge layer instead of relying only on model memory.
 
 ---
 
@@ -294,7 +294,7 @@ Recommended manual checks:
 - Model switching updates the active model.
 - A medical query shows warning + guides.
 - A non-medical query does not trigger the medical panel.
-- Citations appear only when supporting chunks are found [cite:1][web:13].
+- Citations appear only when supporting chunks are found.
 
 ---
 
@@ -303,9 +303,9 @@ Recommended manual checks:
 - **Use exFAT** for cross-platform compatibility and large files.
 - Prefer **USB 3.0 / 3.1** ports for faster runtime and model loading.
 - Keep large assets out of Git and copy them locally during deployment.
-- Test on a clean machine before treating the USB build as portable-ready [cite:3].
+- Test on a clean machine before treating the USB build as portable-ready.
 
-Because GGUF models and `.zim` archives can be large, this repository should usually version the scaffold and documentation while the heavy runtime assets are added locally or distributed separately [cite:3][web:46].
+Because GGUF models and `.zim` archives can be large, this repository should usually version the scaffold and documentation while the heavy runtime assets are added locally or distributed separately.
 
 ---
 
