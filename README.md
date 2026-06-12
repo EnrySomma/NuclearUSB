@@ -199,7 +199,7 @@ In demo mode, the system should still be able to:
 - load the UI,
 - answer using local sample indexes,
 - show citations,
-- trigger medical guide surfacing where relevant [cite:1].
+- trigger medical guide surfacing where relevant.
 
 ---
 
