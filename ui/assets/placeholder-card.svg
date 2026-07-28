@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder card</title>
+  <desc id="desc">Abstract terminal grid placeholder.</desc>
+  <rect width="320" height="180" rx="8" fill="#111820"/>
+  <path d="M24 38h272M24 74h272M24 110h272M24 146h272M64 20v140M128 20v140M192 20v140M256 20v140" stroke="#243241" stroke-width="1"/>
+  <rect x="30" y="28" width="76" height="18" rx="3" fill="#2d9ea0" opacity=".35"/>
+  <rect x="30" y="66" width="150" height="14" rx="3" fill="#e6edf3" opacity=".16"/>
+  <rect x="30" y="94" width="220" height="14" rx="3" fill="#e6edf3" opacity=".12"/>
+  <circle cx="268" cy="132" r="20" fill="none" stroke="#d29922" stroke-width="3"/>
+</svg>

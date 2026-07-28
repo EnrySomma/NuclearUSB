@@ -1,0 +1,34 @@
+================================================================================
+NUCLEARUSB OFFLINE KNOWLEDGE SYSTEM
+CATEGORY: MEDICAL
+FILE: CPR_Guide.txt (Cardiopulmonary Resuscitation Manual)
+================================================================================
+
+1. ADULT CPR PROCEDURE (Ages 8 and older)
+If an adult is unresponsive and not breathing (or only gasping):
+- Position the person flat on their back on a firm, flat surface.
+- Place the heel of one hand in the center of the chest (lower half of sternum).
+- Place the other hand on top, interlocking your fingers.
+- Position your shoulders directly over your hands, keeping arms straight.
+- Deliver chest compressions: Push down at least 2 inches (5 cm).
+- Perform compressions at a rate of 100 to 120 compressions per minute.
+- After 30 compressions, perform 2 rescue breaths:
+  - Tilt head back, lift chin to open the airway.
+  - Pinch the nose shut, seal your mouth over theirs, and blow for 1 second.
+  - Watch for chest rise. Give a second breath.
+- Continue cycles of 30 compressions and 2 rescue breaths (30:2 ratio).
+- Do not stop until professional medical help arrives or the person recovers.
+
+2. CHILD AND INFANT CPR (Under 8 years old)
+- For children: Use one or two hands depending on child size to compress 2 inches.
+- For infants (under 1 year): Use two fingers in the center of the chest to compress
+  about 1.5 inches (4 cm).
+- Give 30 compressions followed by 2 rescue breaths. If you are alone and did not
+  witness the collapse, perform 5 cycles (about 2 minutes) of CPR before calling
+  emergency services.
+
+3. HANDS-ONLY CPR
+If you are untrained or unwilling to perform rescue breaths:
+- Perform continuous chest compressions at a rate of 100-120 per minute.
+- Push hard and fast in the center of the chest.
+- This maintains vital blood flow to the brain and organs until help arrives.

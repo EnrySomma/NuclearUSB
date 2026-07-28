@@ -1,0 +1,49 @@
+================================================================================
+NUCLEARUSB OFFLINE KNOWLEDGE SYSTEM
+CATEGORY: MEDICAL
+FILE: Guida_Primo_Soccorso.txt (First Aid Guide)
+================================================================================
+
+1. PRINCIPI FONDAMENTALI DEL PRIMO SOCCORSO
+In qualsiasi situazione di emergenza medica, è fondamentale mantenere la calma
+e seguire lo schema ABC:
+- Airway (Vie Aree): Assicurarsi che le vie respiratorie del paziente siano libere.
+- Breathing (Respirazione): Verificare se il paziente respira guardando il petto.
+- Circulation (Circolazione): Controllare il polso o segni di circolazione.
+
+2. TRATTAMENTO DELLE USTIONI MINORI (FIRST DEGREE BURNS)
+Per le ustioni di lieve entità, raffreddare immediatamente l'area colpita sotto
+acqua corrente fresca (non gelata) per almeno 10-20 minuti. Non applicare ghiaccio
+direttamente sulla pelle. Rimuovere con cura anelli o bracciali prima che si verifichi
+gonfiasse. Coprire con una garza sterile e non adesiva. Non forare le vesciche.
+Evitare rimedi casalinghi come burro o dentifricio, poiché aumentano il rischio
+di infezioni e trattengono il calore nella ferita.
+
+3. GESTIONE DI FERITE E SANGUINAMENTI (WOUND CARE)
+Per ferite minori, lavare l'area con acqua pulita e sapone neutro per eliminare
+detriti. Applicare una leggera pressione con una garza pulita per arrestare il
+sanguinamento. Una volta fermo il sangue, disinfettare la ferita, applicare una
+pomata antibiotica e coprire con un cerotto sterile. Cambiare la medicazione
+giornalmente e monitorare segni di infezione: calore, gonfiore, rossore accentuato.
+
+4. OSTRUZIONE DELLE VIE AEREE (CHOKING RESPONSE)
+Se un adulto cosciente sta soffocando e non riesce a parlare, tossire o respirare,
+eseguire la manovra di Heimlich: posizionarsi alle spalle del soggetto, cingere la
+vita con le braccia, collocare un pugno chiuso subito sopra l'ombelico e afferrarlo
+con l'altra mano. Eseguire spinte decise verso l'interno e verso l'alto fino a quando
+l'ostruzione non viene espulsa o il soggetto perde conoscenza.
+
+5. TRATTAMENTO DELLO SHOCK (SHOCK MANAGEMENT)
+Lo shock è un'emergenza medica causata da una drastica riduzione del flusso sanguigno
+agli organi vitali. Sintomi: battito cardiaco debole e rapido, respiro superficiale,
+pelle pallida e fredda, stato confusionale. Trattamento: distendere il paziente
+sulla schiena e sollevare le gambe di circa 30 cm (a meno che non si sospettino
+traumi alla testa o alla colonna vertebrale). Coprire il paziente con una coperta
+per mantenere la temperatura e non somministrare cibi o liquidi.
+
+6. ALLERGIE E ANAFILASSI
+Le reazioni allergiche gravi (anafilassi) provocano rigonfiamento della gola,
+difficoltà respiratorie repentine e calo pressorio. Se il paziente possiede un
+autoiniettore di adrenalina (EpiPen), procedere all'iniezione nella parte esterna
+della coscia. Posizionare il paziente sdraiato e facilitare la respirazione.
+Assicurare assistenza medica d'emergenza il prima possibile.

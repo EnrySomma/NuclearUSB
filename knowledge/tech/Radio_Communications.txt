@@ -1,0 +1,40 @@
+================================================================================
+NUCLEARUSB OFFLINE KNOWLEDGE SYSTEM
+CATEGORY: TECH
+FILE: Radio_Communications.txt (Radio Communications Guide)
+================================================================================
+
+1. OVERVIEW OF RADIO SERVICES
+When grid communications (cell networks, fiber internet) fail, radio frequencies
+are the primary medium for regional information coordination.
+
+2. FAMILY RADIO SERVICE (FRS) & GENERAL MOBILE RADIO SERVICE (GMRS)
+- FRS: Very common hand-held walkie-talkies.
+  - License: None required.
+  - Frequencies: 22 channels in the UHF band (462 - 467 MHz).
+  - Power limit: 2 Watts. Short range (1-2 miles line-of-sight).
+- GMRS: Similar frequencies to FRS but allows higher power and external antennas.
+  - License: Required (paid registration, no test).
+  - Range: Up to 5-10 miles or more, supports repeaters.
+
+3. AMATEUR (HAM) RADIO
+Amateur radio offers the longest range and highest flexibility.
+- License: Exam required.
+- VHF (2-meter band, 144-148 MHz) & UHF (70-centimeter band, 420-450 MHz):
+  - Excellent for local/regional communication.
+  - National simplex calling frequency: 146.520 MHz FM.
+- HF (High Frequency, 3-30 MHz):
+  - Can bounce off the ionosphere (NVIS or skywave propagation) for long-distance,
+    cross-country or international communications.
+
+4. CITIZENS BAND (CB) RADIO
+- Frequencies: 40 channels in the 27 MHz range (HF).
+- Emergency Channel: Channel 9 (27.065 MHz) is reserved for emergency monitoring.
+- Power: 4 Watts (AM), 12 Watts (SSB).
+
+5. MESH RADIO PROTOCOLS (MESHTASTIC / LoRa)
+- LoRa (Long Range) operates on sub-GHz ISM bands (915 MHz in US, 868 MHz in EU).
+- Meshtastic: Open-source software running on ESP32/nRF52 microcontrollers.
+- Nodes form a decentralized mesh network: each node repeats messages,
+  enabling secure text communication and location sharing across miles without
+  internet or cell infrastructure.

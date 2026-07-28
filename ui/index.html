@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NuclearUSB - Offline AI</title>
+  <meta name="description" content="NuclearUSB: assistente AI offline portatile per Windows con modelli locali e Wikipedia offline.">
+  <meta name="theme-color" content="#0a0d0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="NuclearUSB home">
+        <img src="assets/nuclearusb-mark.png" alt="" class="brand-mark">
+        <span class="brand-name">NuclearUSB</span>
+        <span class="brand-tag">Offline Toolkit</span>
+      </a>
+
+      <div class="topbar-actions">
+        <select id="model-select" class="model-select" aria-label="Modello attivo">
+          <option value="fast">Fast</option>
+          <option value="power">Power</option>
+          <option value="coding">Coding</option>
+        </select>
+        <span id="mode-badge" class="status-badge status-demo">DEMO</span>
+        <a id="wiki-btn" class="topbar-link hidden" href="http://localhost:8081" target="_blank" rel="noopener noreferrer">Wikipedia</a>
+        <button id="settings-toggle" class="icon-button" type="button" aria-label="Apri impostazioni" title="Impostazioni">
+          <span aria-hidden="true">Settings</span>
+        </button>
+        <button id="shutdown-btn" class="icon-button danger" type="button" aria-label="Spegni server" title="Spegni server">
+          <span aria-hidden="true">Power</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="chat-layout">
+      <section id="chat-messages" class="messages" aria-live="polite">
+        <div id="welcome" class="welcome">
+          <img src="assets/nuclearusb-logo.png" alt="NuclearUSB" class="welcome-logo">
+          <h1>Assistente AI offline</h1>
+          <p>Risposte locali, prompt configurabili e Wikipedia offline in una singola interfaccia.</p>
+          <div class="starter-grid">
+            <button class="starter-card" type="button" data-q="Come tratto una piccola ustione?">Primo soccorso ustioni</button>
+            <button class="starter-card" type="button" data-q="Spiega il three-way handshake TCP.">TCP handshake</button>
+            <button class="starter-card" type="button" data-q="Scrivi una funzione JavaScript per ordinare un array di oggetti.">Codice JavaScript</button>
+            <button class="starter-card" type="button" data-q="Come posso rendere potabile l'acqua in emergenza?">Acqua potabile</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="composer" aria-label="Invia messaggio">
+        <div class="composer-meta">
+          <button id="new-chat-btn" class="secondary-button" type="button">New Chat</button>
+          <span id="message-count" class="message-count">0 messaggi</span>
+          <span id="footer-status" class="runtime-summary">Inizializzazione...</span>
+        </div>
+        <div class="composer-row">
+          <textarea id="chat-input" rows="1" placeholder="Chiedi a NuclearUSB..."></textarea>
+          <button id="send-btn" class="send-button" type="button">Invia</button>
+        </div>
+      </section>
+    </main>
+
+    <aside id="settings-drawer" class="settings-drawer drawer-closed" aria-label="Impostazioni">
+      <div class="drawer-header">
+        <div>
+          <h2>Impostazioni</h2>
+          <p>Modelli, prompt, temperatura e stato locale.</p>
+        </div>
+        <button id="close-drawer" class="drawer-close" type="button" aria-label="Chiudi impostazioni">Close</button>
+      </div>
+
+      <div class="drawer-body">
+        <section class="drawer-section">
+          <h3>Modello</h3>
+          <div id="model-cards" class="model-cards"></div>
+        </section>
+
+        <section class="drawer-section">
+          <h3>System prompt</h3>
+          <p class="section-note">Modifica i prompt locali. Il salvataggio aggiorna config/models.json.</p>
+          <div id="prompt-list" class="prompt-list"></div>
+          <button id="save-prompt-btn" class="primary-button" type="button">Salva prompt</button>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Temperatura</h3>
+          <div class="slider-row">
+            <input id="temp-slider" type="range" min="0.1" max="1.0" step="0.1" value="0.7">
+            <span id="temp-val" class="slider-value">0.7</span>
+          </div>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Wikipedia offline</h3>
+          <p id="wiki-status-text" class="section-note">Stato in verifica...</p>
+          <a id="wiki-drawer-btn" class="drawer-link hidden" href="http://localhost:8081" target="_blank" rel="noopener noreferrer">Apri Wikipedia offline</a>
+        </section>
+
+        <section class="drawer-section">
+          <h3>Stato sistema</h3>
+          <dl class="status-grid">
+            <dt>Modalita</dt><dd id="s-mode">-</dd>
+            <dt>Server LLM</dt><dd id="s-llm">-</dd>
+            <dt>Kiwix</dt><dd id="s-kiwix">-</dd>
+            <dt>Porta API</dt><dd id="s-port">3001</dd>
+          </dl>
+        </section>
+      </div>
+    </aside>
+
+    <div id="drawer-backdrop" class="drawer-backdrop hidden"></div>
+    <div id="toast-container" class="toasts" aria-live="assertive"></div>
+    <div id="shutdown-overlay" class="shutdown-overlay hidden">
+      <div>Server spento. Puoi chiudere questa finestra.</div>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "models": [
+    {
+      "id": "fast",
+      "name": "Phi-3.5-mini-instruct",
+      "path": "downloads/models/fast/Phi-3.5-mini-instruct-Q4_K_M.gguf",
+      "ctx_size": 4096,
+      "gpu_layers": 0,
+      "description": "Fast local chat model for quick, practical responses.",
+      "system_prompt": "Sei NuclearUSB modalita Fast, un assistente AI offline portatile per Windows progettato per funzionare in situazioni di emergenza e senza connessione internet. Fornisci risposte rapide, chiare, concise e direttamente utili. Quando l'utente chiede procedure pratiche, organizza la risposta in passaggi brevi e segnala i limiti di sicurezza."
+    },
+    {
+      "id": "power",
+      "name": "Gemma 4 Obliterated",
+      "path": "downloads/models/power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf",
+      "ctx_size": 8192,
+      "gpu_layers": 0,
+      "description": "General-purpose model for deep reasoning and detailed offline answers.",
+      "system_prompt": "Sei NuclearUSB modalita Power, un assistente AI offline portatile per Windows progettato per operare completamente disconnesso dalla rete. Fornisci analisi approfondite, ragionamenti dettagliati e risposte precise. Esplicita ipotesi, limiti e passaggi decisionali quando la domanda richiede cautela."
+    },
+    {
+      "id": "coding",
+      "name": "Gemma 4 Coder",
+      "path": "downloads/models/coding/gemma4-coding-Q4_K_M.gguf",
+      "ctx_size": 8192,
+      "gpu_layers": 0,
+      "description": "Coding-focused model for software engineering and technical debugging.",
+      "system_prompt": "Sei NuclearUSB modalita Coding, uno specialista offline in programmazione e ingegneria del software per Windows. Scrivi codice pulito, leggibile e verificabile. Quando risolvi bug, spiega causa, modifica e test consigliati. Non richiedere risorse online se non sono disponibili."
+    }
+  ]
+}
