@@ -1,9 +1,18 @@
 # NuclearUSB 🚀🔋
 
+![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
+![llama.cpp](https://img.shields.io/badge/LLM%20engine-llama.cpp-black?style=for-the-badge&logo=github)
+![Kiwix](https://img.shields.io/badge/offline%20knowledge-Kiwix-orange?style=for-the-badge)
+![Offline](https://img.shields.io/badge/offline-ready-brightgreen?style=for-the-badge)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-ff69b4?style=for-the-badge)
+![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA%2012-76B900?style=for-the-badge&logo=nvidia&logoColor=white)
+
 Portable offline AI su USB per Windows x64 — interfaccia browser locale, modelli LLM eseguiti con llama.cpp e conoscenza offline tramite Kiwix (archivi .zim). Funziona senza connessione Internet: porta l'assistente AI con te su una chiavetta.
 
 ![Hero screenshot](assets/hero.png)
-*Screenshot dimostrativo — sostituisci `assets/hero.png` con un’immagine reale.*
+*Screenshot dimostrativo — sostituisci `assets/hero.png` con un'immagine reale.*
 
 ---
 
@@ -46,7 +55,7 @@ Per chi vuole un assistente che:
 
 ## 🚀 Avvio rapido
 
-1. Assicurati di avere Node.js LTS installato: https://nodejs.org/en/download/
+1. Assicurati di avere Node.js LTS installato: [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 2. Scarica e posiziona gli asset esterni (vedi "Asset da scaricare" più sotto).
 3. Doppio clic su `start.bat` nella root del progetto.
 4. Il launcher avvia il server e apre Chrome su `http://localhost:3001` (se occupata, sceglie la porta libera successiva).
@@ -77,30 +86,28 @@ Nota: non usare `server/models` o `downloads/knowledge` — l'app non li legge.
 
 ## 📥 Asset da scaricare (in breve)
 
-1. Runtime LLM — llama.cpp  
-   - Release ufficiale: https://github.com/ggml-org/llama.cpp/releases  
-   - Per Windows x64 con NVIDIA: scegli la build "Windows x64 (CUDA 12)".  
+1. **Runtime LLM — llama.cpp**
+   - Release ufficiale: [https://github.com/ggml-org/llama.cpp/releases](https://github.com/ggml-org/llama.cpp/releases)
+   - Per Windows x64 con NVIDIA: scegli la build "Windows x64 (CUDA 12)".
    - Estrai `llama-server.exe` + DLL in `downloads/runtime/llm/win/`.
 
-2. Modelli GGUF  
-   - Fast: downloads/models/fast/Phi-3.5-mini-instruct-Q4_K_M.gguf  
-     (circa 2.4 GB)  
-     Link: https://huggingface.co/goodasdgood/Phi-3.5-mini-instruct-Q4_K_M-GGUF  
-   - Power: downloads/models/power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf  
-     (circa 7.4 GB)  
-     Link: https://huggingface.co/OBLITERATUS/Gemma-4-12B-OBLITERATED  
-   - Coding: downloads/models/coding/gemma4-coding-Q4_K_M.gguf  
-     Link: https://huggingface.co/yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF
+2. **Modelli GGUF**
+   - Fast: `downloads/models/fast/Phi-3.5-mini-instruct-Q4_K_M.gguf` (circa 2.4 GB)
+     Link: [Phi-3.5-mini-instruct-Q4_K_M-GGUF](https://huggingface.co/goodasdgood/Phi-3.5-mini-instruct-Q4_K_M-GGUF)
+   - Power: `downloads/models/power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf` (circa 7.4 GB)
+     Link: [Gemma-4-12B-OBLITERATED](https://huggingface.co/OBLITERATUS/Gemma-4-12B-OBLITERATED)
+   - Coding: `downloads/models/coding/gemma4-coding-Q4_K_M.gguf`
+     Link: [gemma-4-12B-coder-fable5-composer2.5-v1-GGUF](https://huggingface.co/yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF)
 
    Controlla sempre licenze e checksum sulle pagine dei modelli.
 
-3. Runtime Kiwix  
-   - Scarica Kiwix Tools per Windows: https://download.kiwix.org/release/kiwix-tools/  
+3. **Runtime Kiwix**
+   - Scarica Kiwix Tools per Windows: [https://download.kiwix.org/release/kiwix-tools/](https://download.kiwix.org/release/kiwix-tools/)
    - Estrai `kiwix-serve.exe` + DLL in `downloads/runtime/kiwix/win/`.
 
-4. Archivi Wikipedia `.zim`  
-   - Scegli dalla libreria ufficiale: https://library.kiwix.org/  
-   - O direttamente: https://download.kiwix.org/zim/wikipedia/  
+4. **Archivi Wikipedia `.zim`**
+   - Scegli dalla libreria ufficiale: [https://library.kiwix.org/](https://library.kiwix.org/)
+   - O direttamente: [https://download.kiwix.org/zim/wikipedia/](https://download.kiwix.org/zim/wikipedia/)
    - Copia i file `.zim` in `downloads/wikipedia/`. Kiwix sarà disponibile su porta 8081.
 
 ---
@@ -147,7 +154,7 @@ I test controllano configurazione e risposte API di base.
 
 ## 🙏 Ringraziamenti & Contatti
 
-Creato da EnrySomma — contribuizioni benvenute tramite PR/issue.  
+Creato da **EnrySomma** — contribuzioni benvenute tramite PR/issue.
 Descrizione: Portable offline AI on a USB drive: local LLMs, browser UI, offline knowledge, document citations, and topic-aware guide surfacing.
 
 ---
