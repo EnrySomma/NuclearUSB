@@ -24,9 +24,10 @@ async function handleHealth(req, res, ctx) {
 }
 
 async function handleStatus(req, res, ctx) {
+  await ctx.helpers.waitForLlmTransition();
   ctx.helpers.refreshMode();
-  if (ctx.state.mode === 'real' && !ctx.state.llm_process) {
-    ctx.helpers.spawnLlamaServer();
+  if (ctx.state.mode === 'real' && !ctx.state.llm_process && !ctx.state.llm_external) {
+    await ctx.helpers.spawnLlamaServer();
   }
 
   const processUp = llmClient.processAlive(ctx.state);
@@ -87,12 +88,20 @@ async function handleSwitchModel(req, res, ctx) {
   const previousModel = ctx.state.active_model;
   ctx.state.active_model = modelId;
   ctx.helpers.refreshMode();
+  let llmReady = false;
   if (ctx.state.mode === 'real') {
     if (previousModel === modelId) {
-      ctx.helpers.spawnLlamaServer();
+      llmReady = await ctx.helpers.ensureLlmReady();
     } else {
-      ctx.helpers.restartLlamaServer();
+      llmReady = await ctx.helpers.restartLlamaServer();
     }
+  }
+
+  if (ctx.state.mode === 'real' && !llmReady) {
+    ctx.state.active_model = previousModel;
+    ctx.helpers.refreshMode();
+    sendJSON(res, { ok: false, error: `Model '${modelId}' did not become ready.` }, 503);
+    return;
   }
 
   sendJSON(res, {
@@ -114,6 +123,10 @@ async function handleChat(req, res, ctx) {
 
   const messages = Array.isArray(body.messages) ? body.messages : [{ role: 'user', content: message }];
   const temperature = llmClient.clampTemperature(body && body.temperature);
+  const requestedMaxTokens = Number(body && body.maxTokens);
+  const maxTokens = Number.isFinite(requestedMaxTokens)
+    ? Math.max(16, Math.min(requestedMaxTokens, 2048))
+    : 512;
   const category = classifyCategory(message, ctx.config.app.medical_keywords || []);
   const isMedical = category === 'medical';
   const model = ctx.helpers.activeModelConfig();
@@ -123,9 +136,10 @@ async function handleChat(req, res, ctx) {
   let llm_error = null;
   let timings = null;
 
-  // Trust the process being alive as primary check, fall back to HTTP health
-  const processUp = llmClient.processAlive(ctx.state);
-  const llmReady = ctx.state.mode === 'real' && (processUp || await ctx.helpers.llmHealth());
+  // Trust the process being alive as primary check, fall back to HTTP health.
+  // During a model transition, wait for the new process instead of exposing a
+  // DEMO response while the selected model is still loading.
+  const llmReady = ctx.state.mode === 'real' && await ctx.helpers.ensureLlmReady();
 
   if (llmReady) {
     try {
@@ -134,18 +148,42 @@ async function handleChat(req, res, ctx) {
         category,
         ctx.config.app.medical_disclaimer
       );
-      const result = await llmClient.chatCompletion(messages, systemPrompt, model, ctx.config.ports.llm_server, { temperature });
+      let result;
+      try {
+        result = await llmClient.chatCompletion(messages, systemPrompt, model, ctx.config.ports.llm_server, { temperature, maxTokens });
+      } catch (firstError) {
+        // llama-server can briefly reject requests while it has just finished
+        // loading a new model or is releasing the previous one. Give it one
+        // bounded retry before declaring the real model unavailable.
+        await new Promise(resolve => setTimeout(resolve, 750));
+        if (!await ctx.helpers.ensureLlmReady()) throw firstError;
+        result = await llmClient.chatCompletion(messages, systemPrompt, model, ctx.config.ports.llm_server, { temperature, maxTokens });
+      }
       reply = result.text;
       timings = result.timings;
       mode = 'real';
     } catch (err) {
       llm_error = err.message;
-      mode = 'demo';
-      reply = mock.generateModelOnlyMockResponse(message, category, ctx.config.app);
+      sendJSON(res, {
+        ok: false,
+        error: `Il modello '${ctx.state.active_model}' non è pronto: ${err.message}`,
+        mode: 'error',
+        active_model: ctx.state.active_model,
+        llm_error
+      }, 503);
+      return;
     }
-  } else {
+  } else if (ctx.state.mode === 'demo') {
     mode = 'demo';
     reply = mock.generateModelOnlyMockResponse(message, category, ctx.config.app);
+  } else {
+    sendJSON(res, {
+      ok: false,
+      error: `Il modello '${ctx.state.active_model}' non è pronto. Attendi il completamento del caricamento e riprova.`,
+      mode: 'error',
+      active_model: ctx.state.active_model
+    }, 503);
+    return;
   }
 
   sendJSON(res, {
@@ -157,6 +195,7 @@ async function handleChat(req, res, ctx) {
     active_model: ctx.state.active_model,
     category,
     temperature,
+    maxTokens,
     timings,
     llm_error
   });

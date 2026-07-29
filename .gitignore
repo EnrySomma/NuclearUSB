@@ -1,0 +1,9 @@
+# Large offline assets - place manually on the USB drive
+downloads/runtime/
+downloads/models/
+downloads/wikipedia/*.zim
+downloads/installers/
+
+# Runtime output and local tooling
+*.log
+node_modules/

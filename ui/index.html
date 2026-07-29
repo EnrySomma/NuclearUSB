@@ -6,21 +6,22 @@
   <title>NuclearUSB - Offline AI</title>
   <meta name="description" content="NuclearUSB: assistente AI offline portatile per Windows con modelli locali e Wikipedia offline.">
   <meta name="theme-color" content="#0a0d0a">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css?v=final">
   <link rel="icon" href="assets/favicon.png" type="image/png">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <a class="brand" href="/" aria-label="NuclearUSB home">
-        <img src="assets/nuclearusb-mark.png" alt="" class="brand-mark">
-        <span class="brand-name">NuclearUSB</span>
-        <span class="brand-tag">Offline Toolkit</span>
-      </a>
+      <div class="topbar-left">
+        <button id="history-toggle" class="icon-button history-toggle" type="button" aria-label="Mostra o nascondi cronologia chat" title="Cronologia chat">Chats</button>
+        <a class="brand" href="/" aria-label="NuclearUSB home">
+          <img src="assets/nuclearusb-logo.png" alt="" class="brand-mark">
+          <span class="brand-name">NuclearUSB</span>
+          <span class="brand-tag">Offline Toolkit</span>
+        </a>
+      </div>
 
-      <div class="topbar-actions">
+      <div class="topbar-center">
         <select id="model-select" class="model-select" aria-label="Modello attivo">
           <option value="fast">Fast</option>
           <option value="power">Power</option>
@@ -28,42 +29,56 @@
         </select>
         <span id="mode-badge" class="status-badge status-demo">DEMO</span>
         <a id="wiki-btn" class="topbar-link hidden" href="http://localhost:8081" target="_blank" rel="noopener noreferrer">Wikipedia</a>
+      </div>
+
+      <div class="topbar-actions">
         <button id="settings-toggle" class="icon-button" type="button" aria-label="Apri impostazioni" title="Impostazioni">
           <span aria-hidden="true">Settings</span>
         </button>
         <button id="shutdown-btn" class="icon-button danger" type="button" aria-label="Spegni server" title="Spegni server">
-          <span aria-hidden="true">Power</span>
+          <span aria-hidden="true">Off</span>
         </button>
       </div>
     </header>
 
-    <main class="chat-layout">
-      <section id="chat-messages" class="messages" aria-live="polite">
-        <div id="welcome" class="welcome">
-          <img src="assets/nuclearusb-logo.png" alt="NuclearUSB" class="welcome-logo">
-          <h1>Assistente AI offline</h1>
-          <p>Risposte locali, prompt configurabili e Wikipedia offline in una singola interfaccia.</p>
-          <div class="starter-grid">
-            <button class="starter-card" type="button" data-q="Come tratto una piccola ustione?">Primo soccorso ustioni</button>
-            <button class="starter-card" type="button" data-q="Spiega il three-way handshake TCP.">TCP handshake</button>
-            <button class="starter-card" type="button" data-q="Scrivi una funzione JavaScript per ordinare un array di oggetti.">Codice JavaScript</button>
-            <button class="starter-card" type="button" data-q="Come posso rendere potabile l'acqua in emergenza?">Acqua potabile</button>
-          </div>
+    <div class="workspace">
+      <aside id="history-sidebar" class="history-sidebar" aria-label="Cronologia chat">
+        <div class="history-header">
+          <h2>Chat history</h2>
+          <button id="history-collapse" class="history-collapse" type="button" aria-label="Riduci cronologia chat" title="Riduci cronologia chat">−</button>
         </div>
-      </section>
+        <button id="history-new-chat" class="history-new-chat" type="button">+ New Chat</button>
+        <div id="chat-history-list" class="chat-history-list" aria-live="polite"></div>
+      </aside>
 
-      <section class="composer" aria-label="Invia messaggio">
-        <div class="composer-meta">
-          <button id="new-chat-btn" class="secondary-button" type="button">New Chat</button>
-          <span id="message-count" class="message-count">0 messaggi</span>
-          <span id="footer-status" class="runtime-summary">Inizializzazione...</span>
-        </div>
-        <div class="composer-row">
-          <textarea id="chat-input" rows="1" placeholder="Chiedi a NuclearUSB..."></textarea>
-          <button id="send-btn" class="send-button" type="button">Invia</button>
-        </div>
-      </section>
-    </main>
+      <main class="chat-layout">
+        <section id="chat-messages" class="messages" aria-live="polite">
+          <div id="welcome" class="welcome">
+            <img src="assets/nuclearusb-logo.png" alt="NuclearUSB" class="welcome-logo">
+            <h1>Assistente AI offline</h1>
+            <p>Risposte locali, prompt configurabili e Wikipedia offline in una singola interfaccia.</p>
+            <div class="starter-grid">
+              <button class="starter-card" type="button" data-q="Come tratto una piccola ustione?">Primo soccorso ustioni</button>
+              <button class="starter-card" type="button" data-q="Spiega il three-way handshake TCP.">TCP handshake</button>
+              <button class="starter-card" type="button" data-q="Scrivi una funzione JavaScript per ordinare un array di oggetti.">Codice JavaScript</button>
+              <button class="starter-card" type="button" data-q="Come posso rendere potabile l'acqua in emergenza?">Acqua potabile</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="composer" aria-label="Invia messaggio">
+          <div class="composer-meta">
+            <button id="new-chat-btn" class="secondary-button" type="button">New Chat</button>
+            <span id="message-count" class="message-count">0 messaggi</span>
+            <span id="footer-status" class="runtime-summary">Inizializzazione...</span>
+          </div>
+          <div class="composer-row">
+            <textarea id="chat-input" rows="1" placeholder="Chiedi a NuclearUSB..."></textarea>
+            <button id="send-btn" class="send-button" type="button">Invia</button>
+          </div>
+        </section>
+      </main>
+    </div>
 
     <aside id="settings-drawer" class="settings-drawer drawer-closed" aria-label="Impostazioni">
       <div class="drawer-header">
@@ -120,6 +135,6 @@
     </div>
   </div>
 
-  <script src="assets/app.js"></script>
+  <script src="assets/app.js?v=final"></script>
 </body>
 </html>

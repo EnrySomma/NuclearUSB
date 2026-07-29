@@ -1,13 +1,7 @@
 {
   "name": "nuclearusb-server",
-  "version": "0.1.0",
-  "description": "NuclearUSB - Portable Offline AI Server",
-  "main": "index.js",
+  "version": "0.2.0",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js"
-  },
-  "keywords": ["offline", "ai", "llm", "rag", "portable"],
-  "author": "NuclearUSB Project",
-  "license": "MIT"
+    "start": "node index.js"
+  }
 }

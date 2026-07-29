@@ -18,8 +18,6 @@ popd
 set "LLM_BIN=%PROJECT_ROOT%\downloads\runtime\llm\win\llama-server.exe"
 set "MODEL_FAST=%PROJECT_ROOT%\downloads\models\fast\Phi-3.5-mini-instruct-Q4_K_M.gguf"
 set "INSTALLER_DIR=%PROJECT_ROOT%\downloads\installers\node"
-set "APP_URL=http://localhost:3001"
-
 echo   Project root: %PROJECT_ROOT%
 echo.
 
@@ -67,12 +65,10 @@ if exist "%LLM_BIN%" if exist "%MODEL_FAST%" (
 
 echo.
 echo =======================================================
-echo   Starting NuclearUSB server on port 3001...
+echo   Starting NuclearUSB server (the URL will be printed after startup)...
 echo   Press Ctrl+C to stop the server.
 echo =======================================================
 echo.
-
-start "" /b cmd /c "ping 127.0.0.1 -n 4 >nul && start "" "%APP_URL%""
 
 cd /d "%PROJECT_ROOT%"
 node server\index.js

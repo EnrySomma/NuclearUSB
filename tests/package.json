@@ -1,0 +1,11 @@
+{
+  "name": "nuclearusb-tests",
+  "version": "0.1.0",
+  "description": "Integration and configuration tests for NuclearUSB",
+  "scripts": {
+    "test:config": "node test_config.js",
+    "test:api": "node test_api.js",
+    "test:all": "node test_config.js && node test_api.js"
+  },
+  "private": true
+}

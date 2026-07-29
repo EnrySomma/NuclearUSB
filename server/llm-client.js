@@ -1,4 +1,5 @@
 const http = require('http');
+const path = require('path');
 
 function buildSystemPrompt(modelConfig, queryCategory, medicalDisclaimer) {
   let prompt = modelConfig && modelConfig.system_prompt
@@ -71,6 +72,18 @@ function clampTemperature(value) {
   return Math.max(0.1, Math.min(1.0, n));
 }
 
+function cleanModelOutput(text) {
+  return String(text || '')
+    // Gemma 4 can expose its native thought-channel delimiters in the text
+    // returned by llama-server. They are protocol markers, not user content.
+    .replace(/<\|channel(?:\|)?\s*>\s*thought\b/gi, '')
+    .replace(/<\|channel(?:\|)?\s*>/gi, '')
+    .replace(/<channel\|>/gi, '')
+    .replace(/^\s*thought\s*$/gim, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 /**
  * Chat completion via llama-server. Returns { text, timings }.
  */
@@ -92,18 +105,33 @@ async function chatCompletion(messages, systemPrompt, modelConfig, llmPort, opti
   const payload = {
     messages: formattedMessages,
     temperature: clampTemperature(options.temperature),
-    n_predict: Math.min(Math.floor((modelConfig.ctx_size || 4096) / 2), 2048),
+    n_predict: Number.isFinite(Number(options.maxTokens))
+      ? Math.max(16, Math.min(Number(options.maxTokens), 2048))
+      : Math.min(Math.floor((modelConfig.ctx_size || 4096) / 2), 512),
     stream: false
   };
 
   try {
     const parsed = await requestJSON(llmPort, '/v1/chat/completions', 'POST', payload);
-    const content = parsed.choices && parsed.choices[0] && parsed.choices[0].message && parsed.choices[0].message.content;
+    const choice = parsed.choices && parsed.choices[0];
+    const message = choice && choice.message;
+    // Reasoning-capable models may spend a short response budget in the
+    // reasoning field and leave content empty. Keep that real output instead
+    // of incorrectly falling back to DEMO mode.
+    const content = [
+      message && message.content,
+      message && message.reasoning_content,
+      message && message.reasoning,
+      choice && choice.text,
+      parsed.content,
+      parsed.response
+    ].find(value => typeof value === 'string' && value.trim());
     const timings = parsed.timings || null;
     const usage = parsed.usage || null;
-    if (content) {
+    const cleanedContent = cleanModelOutput(content);
+    if (cleanedContent) {
       return {
-        text: content,
+        text: cleanedContent,
         timings: normalizeTimings(timings, usage)
       };
     }
@@ -120,7 +148,7 @@ async function chatCompletion(messages, systemPrompt, modelConfig, llmPort, opti
       n_predict: payload.n_predict,
       stream: false
     });
-    const text = parsed.content || parsed.response || '';
+    const text = cleanModelOutput(parsed.content || parsed.response || '');
     if (text) {
       return {
         text,
@@ -136,17 +164,17 @@ async function healthCheck(llmPort) {
   return basicHealthCheck(llmPort, '/health');
 }
 
-function basicHealthCheck(port, route) {
+function basicHealthCheck(port, route, timeout = 5000) {
   return new Promise(resolve => {
     const req = http.request({
       hostname: '127.0.0.1',
       port,
       path: route,
       method: 'GET',
-      timeout: 5000
+      timeout
     }, res => {
       res.resume();
-      res.on('end', () => resolve(res.statusCode >= 200 && res.statusCode < 500));
+      res.on('end', () => resolve(res.statusCode >= 200 && res.statusCode < 300));
     });
 
     req.on('error', () => resolve(false));
@@ -156,6 +184,25 @@ function basicHealthCheck(port, route) {
     });
     req.end();
   });
+}
+
+async function modelInfo(port) {
+  try {
+    const parsed = await requestJSON(port, '/v1/models', 'GET', null, 3000);
+    const item = (Array.isArray(parsed.data) && parsed.data[0])
+      || (Array.isArray(parsed.models) && parsed.models[0]);
+    if (!item) return null;
+    return String(item.id || item.model || item.name || '');
+  } catch (err) {
+    return null;
+  }
+}
+
+function modelMatches(modelId, modelConfig) {
+  if (!modelId || !modelConfig || !modelConfig.path) return false;
+  const loaded = String(modelId).toLowerCase();
+  const expected = path.basename(modelConfig.path).toLowerCase();
+  return loaded === expected || loaded.includes(expected) || expected.includes(loaded);
 }
 
 /**
@@ -174,7 +221,10 @@ module.exports = {
   chatCompletion,
   healthCheck,
   basicHealthCheck,
+  modelInfo,
+  modelMatches,
   processAlive,
   normalizeTimings,
-  clampTemperature
+  clampTemperature,
+  cleanModelOutput
 };

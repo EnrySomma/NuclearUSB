@@ -1,324 +1,101 @@
-# ☢️ NuclearUSB — Portable Offline AI & Knowledge Suite
+# NuclearUSB
 
-NuclearUSB is a portable offline AI and knowledge system designed to run from a 128 GB USB drive. It is intended for disaster management, network-isolated environments, off-grid operations, field deployments, and privacy-focused local workflows.
+Assistente AI portatile e offline per Windows x64. Il progetto usa llama.cpp per i modelli locali e Kiwix come risorsa Wikipedia autonoma. Non serve una connessione Internet mentre l’app è in esecuzione.
 
-The project combines local LLM inference, offline knowledge archives, and a lightweight browser-based interface into a single portable environment.
+## Avvio rapido
 
-[![Project Status: Ready for Demo](https://img.shields.io/badge/Status-Ready%20for%20Demo-yellow.svg)](#)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#)
-[![Version](https://img.shields.io/badge/Version-0.1.0-green.svg)](#)
-[![Platform Compatibility](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](#)
+1. Verifica di avere Node.js LTS installato. Link ufficiale diretto: [nodejs.org/en/download](https://nodejs.org/en/download/).
+2. Prepara gli asset esclusi dal repository seguendo la sezione [Asset da scaricare](#asset-da-scaricare).
+3. Fai doppio clic su `start.bat`.
+4. Il launcher avvia il server e apre automaticamente Chrome sulla porta effettiva. Normalmente è `http://localhost:3001`; se la porta è occupata, NuclearUSB sceglie la successiva libera e apre quella corretta.
 
----
+## Struttura degli asset locali
 
-## 📖 Table of Contents
-
-1. [Overview](#overview)
-2. [Key Features](#key-features)
-3. [Project Architecture](#project-architecture)
-4. [Repository Structure](#repository-structure)
-5. [Quickstart](#quickstart)
-6. [Real Mode Setup](#real-mode-setup)
-7. [Kiwix and Offline Knowledge](#kiwix-and-offline-knowledge)
-8. [Testing](#testing)
-9. [USB Deployment Notes](#usb-deployment-notes)
-10. [Roadmap](#roadmap)
-11. [License](#license)
-
----
-
-## Overview
-
-**NuclearUSB** is a plug-and-play offline AI toolkit built around the idea of a portable local intelligence workstation.
-
-The system is designed to:
-
-- run local GGUF language models,
-- provide a browser-based interface,
-- operate without internet connectivity,
-- serve offline knowledge archives,
-- run directly from removable storage.
-
-The repository supports two operating modes:
-
-- **Demo Mode** — runs with placeholder assets and simulated responses.
-- **Real Mode** — runs with local inference binaries, real GGUF models, and offline knowledge databases.
-
----
-
-## Key Features
-
-- **Triple-model local AI suite**
-  - Fast lightweight assistant.
-  - Strong general-purpose reasoning model.
-  - Coding-focused model.
-
-- **Fully offline operation**
-  - No cloud API dependency.
-  - No external services required.
-
-- **Local GGUF inference**
-  - Powered by `llama.cpp`.
-  - Runs models directly on the host machine.
-
-- **Offline knowledge access**
-  - Supports `.zim` archives through Kiwix.
-  - Enables access to offline libraries such as Wikipedia.
-
-- **Portable USB deployment**
-  - Designed for removable storage.
-  - Keeps runtime, models, and knowledge assets self-contained.
-
-- **Graceful fallback**
-  - Can operate in demo mode when real assets are missing.
-
----
-
-## Project Architecture
+Gli asset binari e i modelli sono esclusi da GitHub per dimensioni e licenze. La struttura deve essere:
 
 ```text
-                   ┌─────────────────────────────┐
-                   │           Static UI         │
-                   │      HTML/CSS/Vanilla JS    │
-                   └───────────────┬─────────────┘
-                                   │ HTTP
-                                   ▼
-                   ┌─────────────────────────────┐
-                   │       Local API Server      │
-                   │      UI + service routes    │
-                   └───────────────┬─────────────┘
-                                   │
-                    ┌──────────────┴──────────────┐
-                    │                             │
-                    ▼                             ▼
-        ┌───────────────────┐        ┌────────────────────┐
-        │   LLM Controller  │        │ Offline Knowledge  │
-        │   llama.cpp API   │        │     Kiwix/ZIM      │
-        └─────────┬─────────┘        └────────────────────┘
-                  │
-                  ▼
-        ┌───────────────────┐
-        │    GGUF Models    │
-        │ fast/power/coding │
-        └───────────────────┘
+downloads/
+├─ models/
+│  ├─ fast/Phi-3.5-mini-instruct-Q4_K_M.gguf
+│  ├─ power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf
+│  └─ coding/gemma4-coding-Q4_K_M.gguf
+├─ runtime/
+│  ├─ llm/win/llama-server.exe        (+ DLL della release llama.cpp)
+│  └─ kiwix/win/kiwix-serve.exe       (+ DLL della release Kiwix)
+└─ wikipedia/
+   └─ uno o più file .zim
 ```
 
-The local AI runtime is based on `llama.cpp`, while Kiwix provides access to offline knowledge archives.
+Non usare `server/models` o `downloads/knowledge`: non sono percorsi utilizzati dall’app.
 
----
+## Asset da scaricare
 
-## Repository Structure
+### 1. Runtime LLM: llama.cpp
+
+Scarica la release ufficiale da [GitHub llama.cpp Releases](https://github.com/ggml-org/llama.cpp/releases). Per un PC Windows x64 con GPU NVIDIA scegli l’archivio **Windows x64 (CUDA 12)** e le DLL CUDA 12.4 abbinate. Per un PC senza CUDA scegli **Windows x64 (CPU)**.
+
+Estrai il contenuto in:
 
 ```text
-NuclearUSB/
-├── config/                  # Application configuration
-│   ├── app.json             # General settings
-│   ├── models.json          # Model definitions
-│   └── ports.json           # Service ports
-│
-├── docs/                     # Documentation
-│   ├── ARCHITECTURE.md
-│   ├── QUICKSTART.md
-│   ├── MISSING_ASSETS.md
-│   ├── TESTING.md
-│   ├── REAL_DEPLOYMENT_NOTES.md
-│   └── SETUP_REAL_ASSETS.md
-│
-├── knowledge/                # Offline knowledge files
-│   └── wikipedia/
-│
-├── models/                   # GGUF model files
-│   ├── coding/
-│   ├── fast/
-│   └── power/
-│
-├── runtime/                  # Local executables
-│   ├── llm/                  # llama.cpp runtime
-│   └── kiwix/                # Kiwix tools
-│
-├── scripts/                  # Launch scripts
-│   └── launch-windows.bat
-│
-├── server/                   # Local API server
-├── tests/                    # Automated tests
-├── ui/                       # Frontend interface
-└── README.md
+downloads/runtime/llm/win/
 ```
 
-The structure separates:
+Il file indispensabile è `llama-server.exe`; lascia nella stessa cartella tutte le DLL estratte. Il launcher usa automaticamente il modello selezionato e avvia il server sulla porta configurata.
 
-- runtime binaries,
-- AI models,
-- offline knowledge,
-- application logic,
-- user interface.
+### 2. Modelli GGUF
 
----
+Scarica il file Q4_K_M indicato e rinominalo esattamente come nella tabella prima di copiarlo:
 
-## Quickstart
+| Modello | File richiesto | Link diretto |
+| --- | --- | --- |
+| Fast | `downloads/models/fast/Phi-3.5-mini-instruct-Q4_K_M.gguf` | [Phi-3.5-mini GGUF su Hugging Face](https://huggingface.co/goodasdgood/Phi-3.5-mini-instruct-Q4_K_M-GGUF/blob/main/phi-3.5-mini-instruct-q4_k_m.gguf) |
+| Power | `downloads/models/power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf` | [Gemma 4 Obliterated Q4_K_M su Hugging Face](https://huggingface.co/OBLITERATUS/Gemma-4-12B-OBLITERATED/blob/main/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf) |
+| Coding | `downloads/models/coding/gemma4-coding-Q4_K_M.gguf` | [Gemma 4 Coder Q4_K_M su Hugging Face](https://huggingface.co/yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF) |
 
-Run NuclearUSB in demo mode without downloading large assets.
+I file dei modelli sono grandi: servono circa 2,4 GB per Fast e 7,4 GB per Power/Coding. Controlla sempre licenza e checksum sulla pagina del modello prima di distribuirli.
 
-### Requirements
+### 3. Runtime Kiwix
 
-- Node.js 18+
-- Modern web browser
-
-### Start
-
-Clone the repository:
-
-```bash
-git clone https://github.com/YOUR-USERNAME/NuclearUSB.git
-cd NuclearUSB
-```
-
-Check Node.js:
-
-```bash
-node -v
-```
-
-Start the server:
-
-```bash
-node server/index.js
-```
-
-Open:
+Scarica [Kiwix Tools per Windows](https://download.kiwix.org/release/kiwix-tools/), estrai `kiwix-serve.exe` e tutte le DLL in:
 
 ```text
-http://localhost:3001
+downloads/runtime/kiwix/win/
 ```
 
----
+Kiwix resta un browser offline indipendente: non viene usato per indicizzare o recuperare risposte della chat.
 
-## Real Mode Setup
+### 4. Archivi Wikipedia `.zim`
 
-Real Mode enables local inference using llama.cpp and GGUF models.
-
-### 1. llama.cpp Runtime
-
-Expected executable:
+Scegli gli archivi dalla [libreria ufficiale Kiwix](https://library.kiwix.org/) oppure dall’[indice diretto degli archivi Wikipedia](https://download.kiwix.org/zim/wikipedia/). Copia uno o più file `.zim` direttamente in:
 
 ```text
-downloads/runtime/llm/win/llama-server.exe
+downloads/wikipedia/
 ```
 
-Required DLL files should remain in the same directory:
+Al riavvio, il pulsante **Wikipedia** apre Kiwix sulla porta `8081`. Gli archivi rimangono esclusivamente una risorsa offline separata dalla chat.
 
-```text
-llama.dll
-ggml.dll
-ggml-cuda.dll
-cudart64_12.dll
-cublas64_12.dll
-cublasLt64_12.dll
-```
+## Configurazione
 
-Windows must be able to resolve these dependencies from the runtime folder.
+- `config/models.json`: nomi, percorsi e prompt dei tre modelli.
+- `config/ports.json`: porta API `3001`, LLM `8080`, Kiwix `8081`.
+- La porta API e quella LLM possono avanzare automaticamente se risultano occupate.
 
-### 2. GGUF Models
+## Verifica
 
-Configured model locations:
+Con il server attivo:
 
-```text
-downloads/models/fast/Phi-3.5-mini-instruct-Q4_K_M.gguf
-downloads/models/power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf
-downloads/models/coding/gemma4-coding-Q4_K_M.gguf
-```
-
-Default GPU configuration:
-
-```text
-gpu_layers = 0
-```
-
-Increase GPU layers only after verifying:
-
-- GPU compatibility,
-- drivers,
-- CUDA runtime,
-- available VRAM.
-
----
-
-## Kiwix and Offline Knowledge
-
-Kiwix provides offline access to `.zim` knowledge archives.
-
-Expected executable:
-
-```text
-downloads/runtime/kiwix/win/kiwix-serve.exe
-```
-
-Expected knowledge location:
-
-```text
-downloads/knowledge/wikipedia/*.zim
-```
-
-Example:
-
-```bash
-kiwix-serve --port=8081 downloads/knowledge/wikipedia/library.zim
-```
-
-Open:
-
-```text
-http://localhost:8081
-```
-
----
-
-## Testing
-
-Run automated checks:
-
-```bash
+```powershell
 node tests/test_config.js
 node tests/test_api.js
 ```
 
-Recommended manual checks:
+La UI mantiene topbar, cronologia e composer nelle proprie regioni; solo l’area centrale dei messaggi scorre verticalmente. Il cambio tra Fast, Power e Coding attende il caricamento del modello e non ricade in DEMO quando il runtime locale è disponibile.
 
-- UI loads correctly.
-- Local API responds.
-- Model switching works.
-- llama.cpp runtime starts correctly.
-- Kiwix serves offline archives.
-- Missing assets produce clear fallback messages.
+## Requisiti e licenze
 
----
+- Windows 10/11 x64.
+- Node.js LTS.
+- Spazio libero sufficiente per runtime, modelli e archivi ZIM.
+- Driver NVIDIA aggiornati se si usa la build CUDA.
 
-## USB Deployment Notes
-
-Recommended:
-
-- Use **exFAT** for compatibility.
-- Prefer USB 3.x storage.
-- Keep large models outside Git history.
-- Test on a clean machine before field deployment.
-
-Large GGUF models and `.zim` archives should normally be distributed separately from the source repository.
-
----
-
-## Roadmap
-
-- [x] Demo-ready scaffold
-- [x] Local UI
-- [x] Configuration system
-- [ ] Stable llama.cpp integration
-- [ ] Multi-model switching
-- [ ] Kiwix automation
-- [ ] USB-first packaging
-- [ ] Offline field deployment testing
-
----
-
-## License
-
-This project is licensed under the **MIT License**.
+I binari, i modelli e gli archivi ZIM hanno licenze proprie: consultare sempre le rispettive pagine ufficiali prima della redistribuzione.

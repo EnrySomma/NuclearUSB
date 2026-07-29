@@ -87,7 +87,9 @@ function serveFile(res, filePath, ext) {
 
     res.writeHead(200, {
       'Content-Type': contentType,
-      'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=3600',
+      // Keep application HTML/CSS/JS fresh so a launcher restart cannot leave
+      // the browser on a stale UI after an update.
+      'Cache-Control': ['.html', '.css', '.js'].includes(ext) ? 'no-cache' : 'public, max-age=3600',
       'X-Content-Type-Options': 'nosniff'
     });
     res.end(data);

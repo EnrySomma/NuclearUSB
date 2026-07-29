@@ -17,25 +17,23 @@ function route(req, res, ctx) {
   }
 
   if (url === '/health' && method === 'GET') {
-    handlers.handleHealth(req, res, ctx);
-    return;
+    return handlers.handleHealth(req, res, ctx);
   }
 
   if (url.startsWith('/api/')) {
-    routeAPI(req, res, ctx, url, method);
-    return;
+    return routeAPI(req, res, ctx, url, method);
   }
 
-  serveStatic(req, res, ctx.uiDir);
+  return serveStatic(req, res, ctx.uiDir);
 }
 
 function routeAPI(req, res, ctx, url, method) {
-  if (url === '/api/status' && method === 'GET') { handlers.handleStatus(req, res, ctx); return; }
-  if (url === '/api/models' && method === 'GET') { handlers.handleModels(req, res, ctx); return; }
-  if (url === '/api/switch-model' && method === 'POST') { handlers.handleSwitchModel(req, res, ctx); return; }
-  if (url === '/api/chat' && method === 'POST') { handlers.handleChat(req, res, ctx); return; }
-  if (url === '/api/update-prompt' && method === 'POST') { handlers.handleUpdatePrompt(req, res, ctx); return; }
-  if (url === '/api/shutdown' && method === 'POST') { handlers.handleShutdown(req, res, ctx); return; }
+  if (url === '/api/status' && method === 'GET') return handlers.handleStatus(req, res, ctx);
+  if (url === '/api/models' && method === 'GET') return handlers.handleModels(req, res, ctx);
+  if (url === '/api/switch-model' && method === 'POST') return handlers.handleSwitchModel(req, res, ctx);
+  if (url === '/api/chat' && method === 'POST') return handlers.handleChat(req, res, ctx);
+  if (url === '/api/update-prompt' && method === 'POST') return handlers.handleUpdatePrompt(req, res, ctx);
+  if (url === '/api/shutdown' && method === 'POST') return handlers.handleShutdown(req, res, ctx);
 
   handlers.sendJSON(res, {
     error: 'Not Found',

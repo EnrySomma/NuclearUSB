@@ -2,6 +2,7 @@
   'use strict';
 
   const API = '';
+  const HISTORY_STORAGE_KEY = 'nuclearusb.chatHistory.v1';
   const MODEL_META = {
     fast: { label: 'Fast', tone: 'risposte rapide e concise' },
     power: { label: 'Power', tone: 'analisi piu profonde' },
@@ -17,6 +18,8 @@
     ports: { api_server: 3001, llm_server: 8080, kiwix_server: 8081 },
     temp: 0.7,
     messages: [],
+    chats: [],
+    currentChatId: null,
     models: [],
     lastTokSpeed: null,
     busy: false
@@ -30,6 +33,11 @@
     settingsToggle: $('settings-toggle'),
     shutdownBtn: $('shutdown-btn'),
     chatMessages: $('chat-messages'),
+    historySidebar: $('history-sidebar'),
+    historyToggle: $('history-toggle'),
+    historyCollapse: $('history-collapse'),
+    historyNewChat: $('history-new-chat'),
+    chatHistoryList: $('chat-history-list'),
     welcome: $('welcome'),
     chatInput: $('chat-input'),
     sendBtn: $('send-btn'),
@@ -55,8 +63,11 @@
   };
 
   function init() {
+    loadChatHistory();
     bindEvents();
     renderModelCards();
+    renderCurrentChat();
+    renderChatHistory();
     refreshMessageCount();
     fetchModels();
     fetchStatus();
@@ -70,7 +81,10 @@
 
     dom.modelSelect.addEventListener('change', event => switchModel(event.target.value));
     dom.sendBtn.addEventListener('click', submitChat);
-    dom.newChatBtn.addEventListener('click', clearChat);
+    dom.newChatBtn.addEventListener('click', startNewChat);
+    dom.historyNewChat.addEventListener('click', startNewChat);
+    dom.historyToggle.addEventListener('click', toggleHistorySidebar);
+    dom.historyCollapse.addEventListener('click', collapseHistorySidebar);
     dom.savePromptBtn.addEventListener('click', savePrompts);
     dom.shutdownBtn.addEventListener('click', requestShutdown);
 
@@ -162,6 +176,8 @@
     hideWelcome();
 
     state.messages.push({ role: 'user', content: text });
+    saveCurrentChat();
+    renderChatHistory();
     appendMessage('user', text);
     refreshMessageCount();
 
@@ -173,13 +189,16 @@
         body: {
           message: text,
           messages: state.messages,
-          temperature: state.temp
+          temperature: state.temp,
+          maxTokens: 512
         }
       });
 
       typing.remove();
       const reply = data.reply || 'Nessuna risposta disponibile.';
-      state.messages.push({ role: 'assistant', content: reply });
+      state.messages.push({ role: 'assistant', content: reply, meta: data });
+      saveCurrentChat();
+      renderChatHistory();
       appendMessage('assistant', reply, data);
 
       if (data.is_medical && data.medical_disclaimer) {
@@ -328,6 +347,113 @@
     dom.footerStatus.textContent = (isReal ? 'LOCAL AI' : 'DEMO') + ' | ' + modelLabel(state.activeModel) + speed;
   }
 
+  function loadChatHistory() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY) || '[]');
+      state.chats = Array.isArray(stored) ? stored.filter(chat => chat && chat.id && Array.isArray(chat.messages)) : [];
+    } catch {
+      state.chats = [];
+    }
+
+    if (state.chats.length === 0) {
+      const chat = createChat();
+      state.chats = [chat];
+      state.currentChatId = chat.id;
+    } else {
+      state.chats.sort((a, b) => Number(b.updatedAt || 0) - Number(a.updatedAt || 0));
+      state.currentChatId = state.chats[0].id;
+      state.messages = state.chats[0].messages.map(message => ({ ...message }));
+    }
+  }
+
+  function createChat() {
+    return {
+      id: 'chat-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+      title: 'New Chat',
+      messages: [],
+      updatedAt: Date.now()
+    };
+  }
+
+  function saveChatHistory() {
+    try {
+      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(state.chats.slice(0, 50)));
+    } catch {
+      // Chat history remains available for the current session if storage is unavailable.
+    }
+  }
+
+  function saveCurrentChat() {
+    const chat = state.chats.find(item => item.id === state.currentChatId);
+    if (!chat) return;
+    chat.messages = state.messages.map(message => ({ ...message }));
+    const firstUserMessage = state.messages.find(message => message.role === 'user');
+    chat.title = firstUserMessage ? firstUserMessage.content.trim().replace(/\s+/g, ' ').slice(0, 42) : 'New Chat';
+    chat.updatedAt = Date.now();
+    state.chats.sort((a, b) => Number(b.updatedAt || 0) - Number(a.updatedAt || 0));
+    saveChatHistory();
+  }
+
+  function renderChatHistory() {
+    dom.chatHistoryList.innerHTML = '';
+    for (const chat of state.chats) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'history-item' + (chat.id === state.currentChatId ? ' active' : '');
+      button.dataset.chatId = chat.id;
+      const title = document.createElement('strong');
+      title.textContent = chat.title || 'New Chat';
+      const count = document.createElement('small');
+      count.textContent = `${chat.messages.length} ${chat.messages.length === 1 ? 'messaggio' : 'messaggi'}`;
+      button.append(title, count);
+      button.addEventListener('click', () => selectChat(chat.id));
+      dom.chatHistoryList.appendChild(button);
+    }
+  }
+
+  function renderCurrentChat() {
+    dom.chatMessages.innerHTML = '';
+    dom.welcome = null;
+    if (state.messages.length === 0) {
+      dom.welcome = createWelcome();
+      dom.chatMessages.appendChild(dom.welcome);
+    } else {
+      state.messages.forEach(message => appendMessage(message.role, message.content, message.meta || {}));
+    }
+  }
+
+  function selectChat(chatId) {
+    if (chatId === state.currentChatId) return;
+    saveCurrentChat();
+    const chat = state.chats.find(item => item.id === chatId);
+    if (!chat) return;
+    state.currentChatId = chat.id;
+    state.messages = chat.messages.map(message => ({ ...message }));
+    renderCurrentChat();
+    renderChatHistory();
+    refreshMessageCount();
+  }
+
+  function startNewChat() {
+    saveCurrentChat();
+    const chat = createChat();
+    state.chats.unshift(chat);
+    state.currentChatId = chat.id;
+    state.messages = [];
+    renderCurrentChat();
+    renderChatHistory();
+    refreshMessageCount();
+    dom.chatInput.focus();
+  }
+
+  function toggleHistorySidebar() {
+    dom.historySidebar.classList.toggle('collapsed');
+  }
+
+  function collapseHistorySidebar() {
+    dom.historySidebar.classList.add('collapsed');
+  }
+
   function refreshPromptHighlight() {
     dom.promptList.querySelectorAll('.prompt-block').forEach(block => {
       block.classList.toggle('active', block.dataset.model === state.activeModel);
@@ -351,7 +477,7 @@
 
     const body = document.createElement('div');
     body.className = 'message-body';
-    body.innerHTML = markdownLite(text);
+    body.innerHTML = markdownLite(role === 'user' ? text : cleanModelOutput(text));
 
     item.appendChild(header);
     item.appendChild(body);
@@ -417,18 +543,6 @@
     note.textContent = text;
     dom.chatMessages.appendChild(note);
     scrollToBottom();
-  }
-
-  function clearChat() {
-    state.messages = [];
-    state.lastTokSpeed = null;
-    state.busy = false;
-    dom.chatMessages.innerHTML = '';
-    dom.welcome = createWelcome();
-    dom.chatMessages.appendChild(dom.welcome);
-    refreshMessageCount();
-    refreshUI();
-    toast('Conversazione cancellata');
   }
 
   function createWelcome() {
@@ -505,6 +619,16 @@
     html = html.replace(/<\/ul>\s*<ul>/g, '');
     html = html.replace(/\n\n/g, '<br><br>');
     return html;
+  }
+
+  function cleanModelOutput(text) {
+    return String(text || '')
+      .replace(/<\|channel(?:\|)?\s*>\s*thought\b/gi, '')
+      .replace(/<\|channel(?:\|)?\s*>/gi, '')
+      .replace(/<channel\|>/gi, '')
+      .replace(/^\s*thought\s*$/gim, '')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
   }
 
   function esc(value) {
