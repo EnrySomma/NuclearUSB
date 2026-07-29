@@ -158,6 +158,7 @@ I test controllano configurazione e risposte API di base.
 
 ## 🙏 Progetto scolastico
 
+Creato da Enrico Sommariva (classe 4INF4)
 ---
 
 ## 📜 Licenza
