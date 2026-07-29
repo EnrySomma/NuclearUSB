@@ -1,4 +1,5 @@
-# NuclearUSB 🚀🔋
+# NuclearUSB <img width="120" height="120" alt="nuclearusb-logo" src="https://github.com/user-attachments/assets/298a67c8-e313-4e85-b526-6a94236ff1ec" />
+
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=node.js&logoColor=white)
