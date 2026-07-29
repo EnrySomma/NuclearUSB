@@ -6,8 +6,6 @@
 ![llama.cpp](https://img.shields.io/badge/LLM%20engine-llama.cpp-black?style=for-the-badge&logo=github)
 ![Kiwix](https://img.shields.io/badge/offline%20knowledge-Kiwix-orange?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/offline-ready-brightgreen?style=for-the-badge)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-ff69b4?style=for-the-badge)
-![GPU](https://img.shields.io/badge/GPU-NVIDIA%20CUDA%2012-76B900?style=for-the-badge&logo=nvidia&logoColor=white)
 
 Portable offline AI su USB per Windows x64 — interfaccia browser locale, modelli LLM eseguiti con llama.cpp e conoscenza offline tramite Kiwix (archivi .zim). Funziona senza connessione Internet: porta l'assistente AI con te su una chiavetta.
 
