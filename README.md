@@ -14,6 +14,8 @@
   <img src="https://img.shields.io/badge/offline-ready-brightgreen?style=for-the-badge" alt="Offline"/>
 </p>
 
+<img width="2550" height="1297" alt="image" src="https://github.com/user-attachments/assets/e450ceee-58fe-463a-9fe3-2760aea4860a" />
+
 ---
 
 ## ✨ Che cos'è NuclearUSB?
