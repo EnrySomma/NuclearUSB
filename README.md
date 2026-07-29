@@ -8,7 +8,7 @@
 
 Portable offline AI su USB per Windows x64 — interfaccia browser locale, modelli LLM eseguiti con llama.cpp e conoscenza offline tramite Kiwix (archivi .zim). Funziona senza connessione Internet: porta l'assistente AI con te su una chiavetta.
 
-![Hero screenshot](<img width="2535" height="1300" alt="image" src="https://github.com/user-attachments/assets/32e334f8-33b7-409b-9c21-510b7a6c81e6" />)
+<img width="2535" height="1300" alt="image" src="https://github.com/user-attachments/assets/32e334f8-33b7-409b-9c21-510b7a6c81e6" />
 
 ---
 
