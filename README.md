@@ -1,15 +1,18 @@
-# NuclearUSB <img width="120" height="120" alt="nuclearusb-logo" src="https://github.com/user-attachments/assets/298a67c8-e313-4e85-b526-6a94236ff1ec" />
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/298a67c8-e313-4e85-b526-6a94236ff1ec" alt="nuclearusb-logo" width="120" />
 
+  <h1>NuclearUSB</h1>
 
-![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![llama.cpp](https://img.shields.io/badge/LLM%20engine-llama.cpp-black?style=for-the-badge&logo=github)
-![Kiwix](https://img.shields.io/badge/offline%20knowledge-Kiwix-orange?style=for-the-badge)
-![Offline](https://img.shields.io/badge/offline-ready-brightgreen?style=for-the-badge)
+  <p align="center"><strong>Assistente AI portatile e completamente offline su USB per Windows x64</strong> — interfaccia browser locale, modelli LLM eseguiti con <code>llama.cpp</code> e conoscenza offline tramite <em>Kiwix</em> (.zim). Funziona senza connessione Internet; privacy, portabilità e facilità d'uso sono al centro del progetto.</p>
+</div>
 
-Portable offline AI su USB per Windows x64 — interfaccia browser locale, modelli LLM eseguiti con llama.cpp e conoscenza offline tramite Kiwix (archivi .zim). Funziona senza connessione Internet, pensato per usi dove privacy e indipendenza dal cloud sono importanti.
-
-![Interfaccia principale](https://github.com/user-attachments/assets/c6bf8f86-d9f7-4bbf-942c-c806a75314c9)
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Platform"/>
+  <img src="https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"/>
+  <img src="https://img.shields.io/badge/LLM%20engine-llama.cpp-black?style=for-the-badge&logo=github" alt="llama.cpp"/>
+  <img src="https://img.shields.io/badge/offline%20knowledge-Kiwix-orange?style=for-the-badge" alt="Kiwix"/>
+  <img src="https://img.shields.io/badge/offline-ready-brightgreen?style=for-the-badge" alt="Offline"/>
+</p>
 
 ---
 
