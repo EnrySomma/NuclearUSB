@@ -8,6 +8,8 @@
 
 Portable offline AI su USB per Windows x64 — interfaccia browser locale, modelli LLM eseguiti con llama.cpp e conoscenza offline tramite Kiwix (archivi .zim). Funziona senza connessione Internet, pensato per usi dove privacy e indipendenza dal cloud sono importanti.
 
+![Interfaccia principale](https://github.com/user-attachments/assets/c6bf8f86-d9f7-4bbf-942c-c806a75314c9)
+
 ---
 
 ## ✨ Che cos'è NuclearUSB?
@@ -39,13 +41,13 @@ Ideale per chi desidera un assistente che:
 
 ## 📸 Galleria
 
-![Interfaccia principale](https://github.com/user-attachments/assets/c6bf8f86-d9f7-4bbf-942c-c806a75314c9)
-
 ![Chat e opzioni modello](https://github.com/user-attachments/assets/4ca4c5a6-0606-4360-a53a-62c5d0f3702c)
+
+> Impostazioni: Modifica system prompt, temperature o cambia modello.
 
 ![Integrazione Kiwix](https://github.com/user-attachments/assets/3060ce31-2dfe-45c1-a189-79e83bd56be4)
 
-> Nota: le immagini qui presenti sono anteprime dell'interfaccia; nella distribuzione su USB le dimensioni vengono adattate al browser.
+> Chat: Crea più chat che rimangono salvate finché non spegni il server.
 
 ---
 
@@ -76,7 +78,7 @@ downloads/
    └─ uno o più file .zim
 ```
 
-Nota: l'app non legge percorsi come `server/models` o `downloads/knowledge` — usa la struttura sopra.
+> Nota: l'app non legge percorsi come `server/models` o `downloads/knowledge` — usa la struttura sopra.
 
 ---
 
