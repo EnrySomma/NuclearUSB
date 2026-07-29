@@ -163,7 +163,3 @@ I test controllano configurazione e risposte API di base.
 **Scopo**: Progetto scolastico interdisciplinare
 
 ---
-
-## 📜 Licenza
-
-Questo repository è distribuito sotto la licenza MIT. Controlla il file `LICENSE` per il testo completo.
