@@ -8,7 +8,7 @@
 
 Portable offline AI su USB per Windows x64 — interfaccia browser locale, modelli LLM eseguiti con llama.cpp e conoscenza offline tramite Kiwix (archivi .zim). Funziona senza connessione Internet: porta l'assistente AI con te su una chiavetta.
 
-<img width="2535" height="1300" alt="image" src="https://github.com/user-attachments/assets/32e334f8-33b7-409b-9c21-510b7a6c81e6" />
+<img width="2535" height="1300" alt="image" src="https://github.com/user-attachments/assets/c6bf8f86-d9f7-4bbf-942c-c806a75314c9" />
 
 ---
 
@@ -39,13 +39,11 @@ Per chi vuole un assistente che:
 
 ---
 
-## 📸 Galleria (sostituisci con screenshot reali)
+## 📸 Galleria
 
-![UI history](assets/screenshot-history.png)
-*Cronologia delle conversazioni*
+<img width="2540" height="1304" alt="image" src="https://github.com/user-attachments/assets/4ca4c5a6-0606-4360-a53a-62c5d0f3702c" />
 
-![UI composer](assets/screenshot-composer.png)
-*Composer e selezione modelli*
+<img width="2548" height="1306" alt="image" src="https://github.com/user-attachments/assets/3060ce31-2dfe-45c1-a189-79e83bd56be4" />
 
 ---
 
@@ -80,7 +78,7 @@ Nota: non usare `server/models` o `downloads/knowledge` — l'app non li legge.
 
 ---
 
-## 📥 Asset da scaricare (in breve)
+## 📥 Asset da scaricare
 
 1. **Runtime LLM — llama.cpp**
    - Release ufficiale: [https://github.com/ggml-org/llama.cpp/releases](https://github.com/ggml-org/llama.cpp/releases)
@@ -150,7 +148,7 @@ I test controllano configurazione e risposte API di base.
 
 ## 🙏 Ringraziamenti & Contatti
 
-Creato da **EnrySomma** — contribuzioni benvenute tramite PR/issue.
+Creato da **EnrySomma**.
 Descrizione: Portable offline AI on a USB drive: local LLMs, browser UI, offline knowledge, document citations, and topic-aware guide surfacing.
 
 ---
