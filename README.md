@@ -1,17 +1,73 @@
-# NuclearUSB
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/298a67c8-e313-4e85-b526-6a94236ff1ec" alt="nuclearusb-logo" width="120" />
 
-Assistente AI portatile e offline per Windows x64. Il progetto usa llama.cpp per i modelli locali e Kiwix come risorsa Wikipedia autonoma. Non serve una connessione Internet mentre l’app è in esecuzione.
+  <h1>NuclearUSB</h1>
 
-## Avvio rapido
+  <p align="center"><strong>Assistente AI portatile e completamente offline su USB per Windows x64</strong> — interfaccia browser locale, modelli LLM eseguiti con <code>llama.cpp</code> e conoscenza offline tramite <em>Kiwix</em> (.zim). Funziona senza connessione Internet; privacy, portabilità e facilità d'uso sono al centro del progetto.</p>
+</div>
 
-1. Verifica di avere Node.js LTS installato. Link ufficiale diretto: [nodejs.org/en/download](https://nodejs.org/en/download/).
-2. Prepara gli asset esclusi dal repository seguendo la sezione [Asset da scaricare](#asset-da-scaricare).
-3. Fai doppio clic su `start.bat`.
-4. Il launcher avvia il server e apre automaticamente Chrome sulla porta effettiva. Normalmente è `http://localhost:3001`; se la porta è occupata, NuclearUSB sceglie la successiva libera e apre quella corretta.
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Platform"/>
+  <img src="https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"/>
+  <img src="https://img.shields.io/badge/LLM%20engine-llama.cpp-black?style=for-the-badge&logo=github" alt="llama.cpp"/>
+  <img src="https://img.shields.io/badge/offline%20knowledge-Kiwix-orange?style=for-the-badge" alt="Kiwix"/>
+  <img src="https://img.shields.io/badge/offline-ready-brightgreen?style=for-the-badge" alt="Offline"/>
+</p>
 
-## Struttura degli asset locali
+---
 
-Gli asset binari e i modelli sono esclusi da GitHub per dimensioni e licenze. La struttura deve essere:
+## ✨ Che cos'è NuclearUSB?
+
+NuclearUSB è un assistente AI portatile e completamente offline progettato per funzionare direttamente da un drive USB su Windows x64. L'architettura è semplice e robusta:
+
+- Un server LLM locale basato su llama.cpp (`llama-server.exe`) che carica modelli GGUF.
+- Una UI web leggera avviata localmente (il launcher apre automaticamente il browser predefinito).
+- Kiwix per consultare Wikipedia offline (.zim) come risorsa separata.
+- Tutto il necessario può essere conservato su un drive USB: runtime, modelli, archivi ZIM.
+
+Ideale per chi desidera un assistente che:
+- Funzioni offline (privacy e affidabilità),
+- Sia rapido da avviare su Windows x64,
+- Permetta di scegliere tra modelli "Fast", "Power" e "Coding".
+
+---
+
+## ⭐ Principali funzionalità
+
+- ✅ Avvio rapido con launcher (`start.bat`)
+- ✅ Interfaccia web locale (porta predefinita: 3001)
+- ✅ Supporto per più modelli GGUF (Fast / Power / Coding)
+- ✅ Kiwix integrato per consultare Wikipedia offline
+- ✅ Nessuna dipendenza cloud — tutto locale
+- ✅ Riconfigurabile via file JSON in `config/`
+
+---
+
+## 📸 Galleria
+
+![Chat e opzioni modello](https://github.com/user-attachments/assets/4ca4c5a6-0606-4360-a53a-62c5d0f3702c)
+
+> Impostazioni: Modifica system prompt, temperature o cambia modello.
+
+![Integrazione Kiwix](https://github.com/user-attachments/assets/3060ce31-2dfe-45c1-a189-79e83bd56be4)
+
+> Chat: Crea più chat che rimangono salvate finché non spegni il server.
+
+---
+
+## 🚀 Avvio rapido
+
+1. Assicurati di avere Node.js LTS installato: https://nodejs.org/en/download/
+2. Scarica e posiziona gli asset esterni (vedi "Asset da scaricare" più sotto).
+3. Doppio clic su `start.bat` nella root del progetto.
+4. Il launcher avvia il server e apre il browser su `http://localhost:3001` (se la porta è occupata, sceglie automaticamente la successiva libera).
+5. Nella UI, scegli il modello (Fast / Power / Coding) e inizia a interagire.
+
+---
+
+## 📁 Struttura degli asset locali (da creare su USB)
+
+Non includere i binari nel repo — posizionali in questa struttura:
 
 ```text
 downloads/
@@ -26,76 +82,82 @@ downloads/
    └─ uno o più file .zim
 ```
 
-Non usare `server/models` o `downloads/knowledge`: non sono percorsi utilizzati dall’app.
+> Nota: l'app non legge percorsi come `server/models` o `downloads/knowledge` — usa la struttura sopra.
 
-## Asset da scaricare
+---
 
-### 1. Runtime LLM: llama.cpp
+## 📥 Asset da scaricare
 
-Scarica la release ufficiale da [GitHub llama.cpp Releases](https://github.com/ggml-org/llama.cpp/releases). Per un PC Windows x64 con GPU NVIDIA scegli l’archivio **Windows x64 (CUDA 12)** e le DLL CUDA 12.4 abbinate. Per un PC senza CUDA scegli **Windows x64 (CPU)**.
+1. **Runtime LLM — llama.cpp**
+   - Release ufficiale: https://github.com/ggml-org/llama.cpp/releases
+   - Per Windows x64 con NVIDIA: scegli la build "Windows x64 (CUDA 12)" se utilizzi GPU.
+   - Estrai `llama-server.exe` + DLL in `downloads/runtime/llm/win/`.
 
-Estrai il contenuto in:
+2. **Modelli GGUF**
+   - Fast: `downloads/models/fast/Phi-3.5-mini-instruct-Q4_K_M.gguf` (circa 2.4 GB)
+     Link: https://huggingface.co/goodasdgood/Phi-3.5-mini-instruct-Q4_K_M-GGUF
+   - Power: `downloads/models/power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf` (circa 7.4 GB)
+     Link: https://huggingface.co/OBLITERATUS/Gemma-4-12B-OBLITERATED
+   - Coding: `downloads/models/coding/gemma4-coding-Q4_K_M.gguf`
+     Link: https://huggingface.co/yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF
 
-```text
-downloads/runtime/llm/win/
-```
+   Controlla sempre licenze e checksum sulle pagine dei modelli.
 
-Il file indispensabile è `llama-server.exe`; lascia nella stessa cartella tutte le DLL estratte. Il launcher usa automaticamente il modello selezionato e avvia il server sulla porta configurata.
+3. **Runtime Kiwix**
+   - Scarica Kiwix Tools per Windows: https://download.kiwix.org/release/kiwix-tools/
+   - Estrai `kiwix-serve.exe` + DLL in `downloads/runtime/kiwix/win/`.
 
-### 2. Modelli GGUF
+4. **Archivi Wikipedia `.zim`**
+   - Scegli dalla libreria ufficiale: https://library.kiwix.org/
+   - O direttamente: https://download.kiwix.org/zim/wikipedia/
+   - Copia i file `.zim` in `downloads/wikipedia/`. Kiwix sarà disponibile su porta 8081.
 
-Scarica il file Q4_K_M indicato e rinominalo esattamente come nella tabella prima di copiarlo:
+---
 
-| Modello | File richiesto | Link diretto |
-| --- | --- | --- |
-| Fast | `downloads/models/fast/Phi-3.5-mini-instruct-Q4_K_M.gguf` | [Phi-3.5-mini GGUF su Hugging Face](https://huggingface.co/goodasdgood/Phi-3.5-mini-instruct-Q4_K_M-GGUF/blob/main/phi-3.5-mini-instruct-q4_k_m.gguf) |
-| Power | `downloads/models/power/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf` | [Gemma 4 Obliterated Q4_K_M su Hugging Face](https://huggingface.co/OBLITERATUS/Gemma-4-12B-OBLITERATED/blob/main/Gemma-4-12B-OBLITERATED-Q4_K_M.gguf) |
-| Coding | `downloads/models/coding/gemma4-coding-Q4_K_M.gguf` | [Gemma 4 Coder Q4_K_M su Hugging Face](https://huggingface.co/yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF) |
+## ⚙️ Configurazione
 
-I file dei modelli sono grandi: servono circa 2,4 GB per Fast e 7,4 GB per Power/Coding. Controlla sempre licenza e checksum sulla pagina del modello prima di distribuirli.
+- `config/models.json` — definisce nomi, percorsi e prompt per i modelli.
+- `config/ports.json` — porta API (default 3001), LLM (8080), Kiwix (8081). Le porte possono avanzare automaticamente se occupate.
 
-### 3. Runtime Kiwix
+Suggerimento: se cambi percorsi o nomi dei modelli, aggiorna `config/models.json` di conseguenza.
 
-Scarica [Kiwix Tools per Windows](https://download.kiwix.org/release/kiwix-tools/), estrai `kiwix-serve.exe` e tutte le DLL in:
+---
 
-```text
-downloads/runtime/kiwix/win/
-```
+## ✅ Verifica (test)
 
-Kiwix resta un browser offline indipendente: non viene usato per indicizzare o recuperare risposte della chat.
-
-### 4. Archivi Wikipedia `.zim`
-
-Scegli gli archivi dalla [libreria ufficiale Kiwix](https://library.kiwix.org/) oppure dall’[indice diretto degli archivi Wikipedia](https://download.kiwix.org/zim/wikipedia/). Copia uno o più file `.zim` direttamente in:
-
-```text
-downloads/wikipedia/
-```
-
-Al riavvio, il pulsante **Wikipedia** apre Kiwix sulla porta `8081`. Gli archivi rimangono esclusivamente una risorsa offline separata dalla chat.
-
-## Configurazione
-
-- `config/models.json`: nomi, percorsi e prompt dei tre modelli.
-- `config/ports.json`: porta API `3001`, LLM `8080`, Kiwix `8081`.
-- La porta API e quella LLM possono avanzare automaticamente se risultano occupate.
-
-## Verifica
-
-Con il server attivo:
+Con server avviato, esegui:
 
 ```powershell
 node tests/test_config.js
 node tests/test_api.js
 ```
 
-La UI mantiene topbar, cronologia e composer nelle proprie regioni; solo l’area centrale dei messaggi scorre verticalmente. Il cambio tra Fast, Power e Coding attende il caricamento del modello e non ricade in DEMO quando il runtime locale è disponibile.
+I test controllano configurazione e risposte API di base.
 
-## Requisiti e licenze
+---
+
+## 🔧 Suggerimenti e risoluzione problemi
+
+- Se la porta 3001 è occupata, il launcher sceglierà automaticamente la successiva libera.
+- Se usi GPU NVIDIA, installa driver aggiornati e usa la build CUDA di llama.cpp.
+- Se un modello non si carica, verifica che il nome del file e il percorso corrispondano a quelli indicati in `config/models.json`.
+- Kiwix è indipendente dalla chat: il pulsante "Wikipedia" apre Kiwix sul server locale (porta 8081).
+
+---
+
+## 🛡️ Requisiti e licenze
 
 - Windows 10/11 x64.
 - Node.js LTS.
-- Spazio libero sufficiente per runtime, modelli e archivi ZIM.
-- Driver NVIDIA aggiornati se si usa la build CUDA.
+- Spazio su disco sufficiente per runtime, modelli e archivi ZIM.
+- I binari, modelli e archivi hanno licenze proprie: consultare le rispettive pagine ufficiali prima di redistribuire.
 
-I binari, i modelli e gli archivi ZIM hanno licenze proprie: consultare sempre le rispettive pagine ufficiali prima della redistribuzione.
+---
+
+## 🙏 Progetto scolastico
+
+---
+
+## 📜 Licenza
+
+Questo repository è distribuito sotto la licenza MIT. Controlla il file `LICENSE` per il testo completo.
