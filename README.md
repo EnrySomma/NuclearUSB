@@ -2,15 +2,13 @@
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11%20x64-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
 ![llama.cpp](https://img.shields.io/badge/LLM%20engine-llama.cpp-black?style=for-the-badge&logo=github)
 ![Kiwix](https://img.shields.io/badge/offline%20knowledge-Kiwix-orange?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/offline-ready-brightgreen?style=for-the-badge)
 
 Portable offline AI su USB per Windows x64 — interfaccia browser locale, modelli LLM eseguiti con llama.cpp e conoscenza offline tramite Kiwix (archivi .zim). Funziona senza connessione Internet: porta l'assistente AI con te su una chiavetta.
 
-![Hero screenshot](assets/hero.png)
-*Screenshot dimostrativo — sostituisci `assets/hero.png` con un'immagine reale.*
+![Hero screenshot](<img width="2535" height="1300" alt="image" src="https://github.com/user-attachments/assets/32e334f8-33b7-409b-9c21-510b7a6c81e6" />)
 
 ---
 
