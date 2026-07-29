@@ -156,9 +156,12 @@ I test controllano configurazione e risposte API di base.
 
 ---
 
-## 🙏 Progetto scolastico
+## 🎓 Crediti
 
-- Creato da Enrico Sommariva (classe 4INF4)
+**Realizzato da**: Enrico Sommariva  
+**Classe**: 4INF4  
+**Scopo**: Progetto scolastico interdisciplinare
+
 ---
 
 ## 📜 Licenza
